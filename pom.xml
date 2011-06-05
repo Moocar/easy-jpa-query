@@ -1,0 +1,52 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>easyquery</groupId>
+    <artifactId>easy-jpa-query</artifactId>
+    <packaging>jar</packaging>
+    <version>0.1</version>
+    <name>easy-jpa-query</name>
+
+    <description>The hibernate generated meta model is awesome, but the Criteria Query framework sucks.
+    This library lets you write awesome queries that actually look like sql, but with the full power of the 
+    generated metamodel</description>
+
+    <inceptionYear>2011</inceptionYear>
+
+    <contributors>
+        <contributor>
+            <name>Anthony Marcar</name>
+            <email>anthony@grabbleapp.com</email>
+            <organization>Grabble</organization>
+            <organizationUrl>http://www.grabbleapp.com</organizationUrl>
+            <timezone>US/Pacific</timezone>
+        </contributor>
+    </contributors>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>r09</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <version>1.0.0.Final</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
