@@ -1,1 +1,5 @@
-see pom for more info
+The hibernate generated meta model is awesome, but the Criteria Query framework sucks. This library lets you write awesome queries that actually look like sql, but with the full power of the generated metamodel.
+
+Check out src/test/java/easyquery/EasyjpaQueryTest for how to use it.
+
+mvn clean install to install it into your local repo.
