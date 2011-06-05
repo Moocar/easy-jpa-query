@@ -10,7 +10,8 @@
 
     <description>The hibernate generated meta model is awesome, but the Criteria Query framework sucks.
     This library lets you write awesome queries that actually look like sql, but with the full power of the 
-    generated metamodel</description>
+    generated metamodel
+    </description>
 
     <inceptionYear>2011</inceptionYear>
 
@@ -25,6 +26,8 @@
     </contributors>
 
     <dependencies>
+        
+        <!-- Runtime dependencies -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -36,6 +39,32 @@
             <version>1.0.0.Final</version>
             <type>jar</type>
         </dependency>
+        
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.6.4.Final</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>1.1.1.Final</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -45,7 +74,35 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                    <compilerArgument>-proc:none</compilerArgument>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <version>2.0.2</version>
+                <executions>
+                    <execution>
+                        <id>process-test</id>
+                        <goals>
+                            <goal>process-test</goal>
+                        </goals>
+                        <phase>generate-test-sources</phase>
+                        <configuration>
+                            <outputDirectory>target/generated-test-sources/metamodel</outputDirectory>
+                            <processors>
+                                <processor>
+                    org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
+                                </processor>
+                            </processors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.javagen.revgen</groupId>
+                <artifactId>maven-hsql-plugin</artifactId>
+                <version>1.0</version>
             </plugin>
         </plugins>
     </build>
