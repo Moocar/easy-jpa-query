@@ -6,11 +6,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.SingularAttribute;
 
-public class EasyQueryProvider {
+public class EasyQuery {
     
     private final EntityManager entityManager;
 
-    public EasyQueryProvider(EntityManager entityManager) {
+    public EasyQuery(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
     

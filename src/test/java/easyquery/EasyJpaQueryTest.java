@@ -16,7 +16,7 @@ import static org.junit.Assert.assertFalse;
 public class EasyJpaQueryTest {
     
     private EntityManager entityManager;
-    private EasyQueryProvider easyQueryProvider;
+    private EasyQuery easyQuery;
     
     @Before
     public void setup() {
@@ -24,14 +24,14 @@ public class EasyJpaQueryTest {
         
         entityManager = entityManagerFactory.createEntityManager();
         
-        easyQueryProvider = new EasyQueryProvider(entityManager);
+        easyQuery = new EasyQuery(entityManager);
     }
     
     @Test
     public void testGetAll() {
         createBicycle("Peugot");
         
-        ImmutableList<Bicycle> bicycles = easyQueryProvider
+        ImmutableList<Bicycle> bicycles = easyQuery
                 .select(Bicycle.class)
                 .getResultList();
 
@@ -42,7 +42,7 @@ public class EasyJpaQueryTest {
     public void testGetOneAttribute() {
         createBicycle("Peugot");
         
-        String model = easyQueryProvider
+        String model = easyQuery
                   .select(Bicycle_.model)
                   .getSingleResult();
 
@@ -55,7 +55,7 @@ public class EasyJpaQueryTest {
         createBicycle("Peugot2");
         createBicycle("Peugot3");
         
-        ImmutableList<Bicycle> bicycles = easyQueryProvider
+        ImmutableList<Bicycle> bicycles = easyQuery
                 .select(Bicycle.class)
                 .where(Bicycle_.model).in(ImmutableSet.of("Peugot1", "Peugot3"))
                 .getResultList();
@@ -69,7 +69,7 @@ public class EasyJpaQueryTest {
         createBicycle("Barft2");
         createBicycle("Peugot3");
         
-        ImmutableList<Bicycle> bicycles = easyQueryProvider
+        ImmutableList<Bicycle> bicycles = easyQuery
                 .select(Bicycle.class)
                 .where(Bicycle_.model).like("Peugot%")
                 .getResultList();
@@ -83,7 +83,7 @@ public class EasyJpaQueryTest {
         createBicycle("i2");
         createBicycle("i3");
         
-        ImmutableList<String> bicycles = easyQueryProvider
+        ImmutableList<String> bicycles = easyQuery
                 .select(Bicycle_.model)
                 .getResultList();
 
@@ -96,7 +96,7 @@ public class EasyJpaQueryTest {
         createBicycle("desc2");
         createBicycle("desc3");
         
-        Bicycle bicycle = easyQueryProvider
+        Bicycle bicycle = easyQuery
                 .select(Bicycle.class)
                 .where(Bicycle_.model).equals("desc3")
                 .getSingleResult();
@@ -104,7 +104,7 @@ public class EasyJpaQueryTest {
         assertEquals("desc3", bicycle.getModel());
 
         try {
-            easyQueryProvider.select(Bicycle.class)
+            easyQuery.select(Bicycle.class)
                     .getSingleResult();
             fail();
 
@@ -122,7 +122,7 @@ public class EasyJpaQueryTest {
         Bicycle bicycle2 = createBicycle("desc", time + 1);
         Bicycle bicycle3 = createBicycle("desc2", time + 2);
         
-        ImmutableList<Bicycle> bicycles = easyQueryProvider
+        ImmutableList<Bicycle> bicycles = easyQuery
                 .select(Bicycle.class)
                 .orderBy(Bicycle_.timestamp).asc()
                 .getResultList();
@@ -131,7 +131,7 @@ public class EasyJpaQueryTest {
         assertTrue(bicycles.equals(ImmutableList.of(bicycle2, bicycle3, bicycle1).asList()));
         assertFalse(bicycles.equals(ImmutableList.of(bicycle1, bicycle2, bicycle3)));
         
-        bicycles = easyQueryProvider
+        bicycles = easyQuery
                 .select(Bicycle.class)
                 .where(Bicycle_.model).equals("desc")
                 .orderBy(Bicycle_.timestamp).asc()
