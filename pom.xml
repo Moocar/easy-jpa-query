@@ -91,18 +91,11 @@
                         <configuration>
                             <outputDirectory>target/generated-test-sources/metamodel</outputDirectory>
                             <processors>
-                                <processor>
-                    org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
-                                </processor>
+                                <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
                             </processors>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.javagen.revgen</groupId>
-                <artifactId>maven-hsql-plugin</artifactId>
-                <version>1.0</version>
             </plugin>
         </plugins>
     </build>
