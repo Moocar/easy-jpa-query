@@ -6,14 +6,14 @@ import easyquery.clause.WhereClause;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.metamodel.SingularAttribute;
 
-public class EasyQuery<S> {
+public class EasyQueryBuilder<S> {
 
     private final ImmutableList.Builder<WhereClause> whereClauses;
     private final ImmutableList.Builder<OrderBy> orderClauses;
     private final CriteriaQuery<S> criteriaQuery;
     private final QueryRunner queryRunner;
     
-    public EasyQuery(CriteriaQuery<S> criteriaQuery, QueryRunner queryRunner) {
+    public EasyQueryBuilder(CriteriaQuery<S> criteriaQuery, QueryRunner queryRunner) {
         whereClauses = ImmutableList.builder();
         orderClauses = ImmutableList.builder();
         this.criteriaQuery = criteriaQuery;

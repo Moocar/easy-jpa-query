@@ -14,7 +14,7 @@ public class EasyQueryProvider {
         this.entityManager = entityManager;
     }
     
-    public <S> EasyQuery<S> select(Class<S> entityClass) {
+    public <S> EasyQueryBuilder<S> select(Class<S> entityClass) {
         
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         
@@ -27,7 +27,7 @@ public class EasyQueryProvider {
         return create(criteriaQuery, entityManager, criteriaBuilder, root);
     }
     
-    public <E, S> EasyQuery<S> select(SingularAttribute<E, S> selectAttribute) {
+    public <E, S> EasyQueryBuilder<S> select(SingularAttribute<E, S> selectAttribute) {
         
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         
@@ -40,9 +40,9 @@ public class EasyQueryProvider {
         return create(criteriaQuery, entityManager, criteriaBuilder, root);
     }
 
-    private <E, S> EasyQuery<S> create(CriteriaQuery<S> criteriaQuery, EntityManager entityManager, CriteriaBuilder criteriaBuilder, Root<E> root) {
+    private <E, S> EasyQueryBuilder<S> create(CriteriaQuery<S> criteriaQuery, EntityManager entityManager, CriteriaBuilder criteriaBuilder, Root<E> root) {
         
-        return new EasyQuery<S>(
+        return new EasyQueryBuilder<S>(
                 criteriaQuery, 
                 new QueryRunner(
                         entityManager,

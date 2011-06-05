@@ -19,16 +19,11 @@ public class CriteriaQueryBuilder {
         this.orderByTransformer = orderByTransformer;
     }
     
-    public <S> CriteriaQuery<S> get(EasyQuery<S> easyQuery) {
+    public <S> CriteriaQuery<S> get(EasyQueryBuilder<S> easyQuery) {
         
-        return build(easyQuery.getCriteriaQuery(), easyQuery.getWhereClauses(), easyQuery.getOrderClauses());
-    }
-
-    private <S> CriteriaQuery<S> build(CriteriaQuery<S> criteriaQuery, ImmutableList<WhereClause> whereClauses, ImmutableList<OrderBy> orderBys) {
-        
-        return criteriaQuery
-                .where(transformWheres(whereClauses))
-                .orderBy(transformOrders(orderBys));
+        return easyQuery.getCriteriaQuery()
+                .where(transformWheres(easyQuery.getWhereClauses()))
+                .orderBy(transformOrders(easyQuery.getOrderClauses()));
     }
 
     private Predicate[] transformWheres(ImmutableList<WhereClause> whereClauses) {

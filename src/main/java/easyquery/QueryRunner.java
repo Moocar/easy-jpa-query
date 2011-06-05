@@ -18,7 +18,7 @@ public class QueryRunner {
         this.entityManager = criteriaQueryBuilder;
     }
 
-    public <S> ImmutableList<S> getResultList(EasyQuery<S> easyQuery) {
+    public <S> ImmutableList<S> getResultList(EasyQueryBuilder<S> easyQuery) {
         
         try {
             
@@ -30,7 +30,7 @@ public class QueryRunner {
         }
     }
 
-    public <S> S getSingleResult(EasyQuery<S> easyQuery) {
+    public <S> S getSingleResult(EasyQueryBuilder<S> easyQuery) {
         
         try {
             
@@ -46,7 +46,7 @@ public class QueryRunner {
         }
     }
 
-    public <S> S getFirstResult(EasyQuery<S> easyQuery) {
+    public <S> S getFirstResult(EasyQueryBuilder<S> easyQuery) {
         
         List<S> resultList = createQuery(easyQuery).getResultList();
         
@@ -58,12 +58,12 @@ public class QueryRunner {
         return resultList.get(0);
     }
     
-    public <S> boolean exists(EasyQuery<S> easyQuery) {
+    public <S> boolean exists(EasyQueryBuilder<S> easyQuery) {
         
         return !getResultList(easyQuery).isEmpty();
     }
     
-    private <S> TypedQuery<S> createQuery(EasyQuery<S> easyQuery) {
+    private <S> TypedQuery<S> createQuery(EasyQueryBuilder<S> easyQuery) {
         
         return entityManagerProvider.createQuery(entityManager.get(easyQuery));
     }
