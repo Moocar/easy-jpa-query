@@ -7,18 +7,17 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 
 public class QueryRunner {
 
     private final EntityManager entityManagerProvider;
-    private final BuildsCriteriaQuery criteriaQueryBuilder;
 
-    public QueryRunner(EntityManager entityManagerProvider, BuildsCriteriaQuery criteriaQueryBuilder) {
+    public QueryRunner(EntityManager entityManagerProvider) {
         this.entityManagerProvider = entityManagerProvider;
-        this.criteriaQueryBuilder = criteriaQueryBuilder;
     }
 
-    public <S> ImmutableList<S> getResultList(EasyQueryBuilder<S> easyQuery) {
+    public <S> ImmutableList<S> getResultList(CriteriaQuery<S> easyQuery) {
         
         try {
             
@@ -30,7 +29,7 @@ public class QueryRunner {
         }
     }
 
-    public <S> S getSingleResult(EasyQueryBuilder<S> easyQuery) {
+    public <S> S getSingleResult(CriteriaQuery<S> easyQuery) {
         
         try {
             
@@ -46,7 +45,7 @@ public class QueryRunner {
         }
     }
 
-    public <S> S getFirstResult(EasyQueryBuilder<S> easyQuery) {
+    public <S> S getFirstResult(CriteriaQuery<S> easyQuery) {
         
         List<S> resultList = createQuery(easyQuery).getResultList();
         
@@ -58,13 +57,8 @@ public class QueryRunner {
         return resultList.get(0);
     }
     
-    public <S> boolean exists(EasyQueryBuilder<S> easyQuery) {
+    private <S> TypedQuery<S> createQuery(CriteriaQuery<S> easyQuery) {
         
-        return getResultList(easyQuery).size() > 0;
-    }
-    
-    private <S> TypedQuery<S> createQuery(EasyQueryBuilder<S> easyQuery) {
-        
-        return entityManagerProvider.createQuery(criteriaQueryBuilder.get(easyQuery));
+        return entityManagerProvider.createQuery(easyQuery);
     }
 }

@@ -1,17 +1,17 @@
 package easyquery;
 
+import javax.persistence.NonUniqueResultException;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 public class EasyJpaQueryTest {
     
@@ -152,12 +152,21 @@ public class EasyJpaQueryTest {
         
         assertEquals(Long.valueOf(3), easyQuery
                 .count(Bicycle.class)
-                .getSingleResult());
+                .getResult());
         
         assertEquals(Long.valueOf(2), easyQuery
                 .count(Bicycle.class)
                 .where(Bicycle_.model).equals("desc")
-                .getSingleResult());
+                .getResult());
+        
+        assertFalse(easyQuery
+                .count(Bicycle.class)
+                .where(Bicycle_.model).equals("dessssc")
+                .exists());
+        
+        assertTrue(easyQuery
+                .count(Bicycle.class)
+                .exists());
     }
 
     private Bicycle createBicycle(String model) {

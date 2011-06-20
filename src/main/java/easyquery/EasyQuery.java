@@ -40,7 +40,7 @@ public class EasyQuery {
         return create(criteriaQuery, entityManager, criteriaBuilder, root);
     }
 
-    public <S> EasyQueryBuilder<Long> count(Class<S> entityClass) {
+    public <S> LongQueryBuilder count(Class<S> entityClass) {
         
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         
@@ -50,20 +50,19 @@ public class EasyQuery {
         
         criteriaQuery.select(criteriaBuilder.count(root));
         
-        return create(criteriaQuery, entityManager, criteriaBuilder, root);
+        return new LongQueryBuilder(
+                criteriaQuery, 
+                new QueryRunner(entityManager), 
+                new WhereTransformer(criteriaBuilder, root));
     }
 
     private <E, S> EasyQueryBuilder<S> create(CriteriaQuery<S> criteriaQuery, EntityManager entityManager, CriteriaBuilder criteriaBuilder, Root<E> root) {
         
         return new EasyQueryBuilder<S>(
                 criteriaQuery, 
-                new QueryRunner(
-                        entityManager,
-                        new CriteriaQueryBuilder(
-                                new WhereTransformer(criteriaBuilder, root),
-                                new OrderByTransformer(criteriaBuilder, root)
-                        )
-                )
+                new QueryRunner(entityManager),
+                new WhereTransformer(criteriaBuilder, root),
+                new OrderByTransformer(criteriaBuilder, root)
         );
     }
 }
