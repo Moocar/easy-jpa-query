@@ -9,7 +9,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 
-public class CriteriaQueryBuilder {
+public class CriteriaQueryBuilder implements BuildsCriteriaQuery {
 
     private final WhereTransformer whereTransformer;
     private final OrderByTransformer orderByTransformer;
@@ -19,6 +19,7 @@ public class CriteriaQueryBuilder {
         this.orderByTransformer = orderByTransformer;
     }
     
+    @Override
     public <S> CriteriaQuery<S> get(EasyQueryBuilder<S> easyQuery) {
         
         return easyQuery.getCriteriaQuery()

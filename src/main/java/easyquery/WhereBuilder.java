@@ -7,31 +7,31 @@ import easyquery.clause.LikeClause;
 import easyquery.clause.NotEqualsClause;
 import javax.persistence.metamodel.SingularAttribute;
 
-public class WhereBuilder<S, E> {
+public class WhereBuilder<E, A, S> {
     
     private final EasyQueryBuilder<S> queryBuilder;
-    private final SingularAttribute<S, E> attribute;
+    private final SingularAttribute<E, A> attribute;
     
-    public WhereBuilder(EasyQueryBuilder<S> queryBuilder, SingularAttribute<S, E> attribute) {
+    public WhereBuilder(EasyQueryBuilder<S> queryBuilder, SingularAttribute<E, A> attribute) {
         this.queryBuilder = queryBuilder;
         this.attribute = attribute;
     }
     
-    public EasyQueryBuilder<S> equals(E object) {
+    public EasyQueryBuilder<S> equals(A object) {
         
         queryBuilder.addWhereClause(new EqualsClause(attribute, object));
         
         return queryBuilder;
     }
     
-    public EasyQueryBuilder<S> in(ImmutableCollection<E> collection) {
+    public EasyQueryBuilder<S> in(ImmutableCollection<A> collection) {
         
         queryBuilder.addWhereClause(new InClause(attribute, collection));
         
         return queryBuilder;
     }
 
-    public EasyQueryBuilder<S> notEquals(E object) {
+    public EasyQueryBuilder<S> notEquals(A object) {
         
         queryBuilder.addWhereClause(new NotEqualsClause(attribute, object));
         

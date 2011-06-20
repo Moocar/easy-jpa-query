@@ -142,6 +142,24 @@ public class EasyJpaQueryTest {
         assertFalse(bicycles.equals(ImmutableList.of(bicycle1, bicycle2)));
     }
 
+    @Test
+    public void testCount() {
+        
+        long time = System.currentTimeMillis();
+        createBicycle("desc", time + 3);
+        createBicycle("desc", time + 1);
+        createBicycle("desc2", time + 2);
+        
+        assertEquals(Long.valueOf(3), easyQuery
+                .count(Bicycle.class)
+                .getSingleResult());
+        
+        assertEquals(Long.valueOf(2), easyQuery
+                .count(Bicycle.class)
+                .where(Bicycle_.model).equals("desc")
+                .getSingleResult());
+    }
+
     private Bicycle createBicycle(String model) {
         return createBicycle(model, System.currentTimeMillis());
     }

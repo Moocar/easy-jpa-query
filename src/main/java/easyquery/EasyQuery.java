@@ -40,6 +40,19 @@ public class EasyQuery {
         return create(criteriaQuery, entityManager, criteriaBuilder, root);
     }
 
+    public <S> EasyQueryBuilder<Long> count(Class<S> entityClass) {
+        
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        
+        Root<S> root = criteriaQuery.from(entityClass);
+        
+        criteriaQuery.select(criteriaBuilder.count(root));
+        
+        return create(criteriaQuery, entityManager, criteriaBuilder, root);
+    }
+
     private <E, S> EasyQueryBuilder<S> create(CriteriaQuery<S> criteriaQuery, EntityManager entityManager, CriteriaBuilder criteriaBuilder, Root<E> root) {
         
         return new EasyQueryBuilder<S>(

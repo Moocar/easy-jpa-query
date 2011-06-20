@@ -11,11 +11,11 @@ import javax.persistence.TypedQuery;
 public class QueryRunner {
 
     private final EntityManager entityManagerProvider;
-    private final CriteriaQueryBuilder entityManager;
+    private final BuildsCriteriaQuery criteriaQueryBuilder;
 
-    public QueryRunner(EntityManager entityManagerProvider, CriteriaQueryBuilder criteriaQueryBuilder) {
+    public QueryRunner(EntityManager entityManagerProvider, BuildsCriteriaQuery criteriaQueryBuilder) {
         this.entityManagerProvider = entityManagerProvider;
-        this.entityManager = criteriaQueryBuilder;
+        this.criteriaQueryBuilder = criteriaQueryBuilder;
     }
 
     public <S> ImmutableList<S> getResultList(EasyQueryBuilder<S> easyQuery) {
@@ -60,11 +60,11 @@ public class QueryRunner {
     
     public <S> boolean exists(EasyQueryBuilder<S> easyQuery) {
         
-        return !getResultList(easyQuery).isEmpty();
+        return getResultList(easyQuery).size() > 0;
     }
     
     private <S> TypedQuery<S> createQuery(EasyQueryBuilder<S> easyQuery) {
         
-        return entityManagerProvider.createQuery(entityManager.get(easyQuery));
+        return entityManagerProvider.createQuery(criteriaQueryBuilder.get(easyQuery));
     }
 }

@@ -20,14 +20,14 @@ public class EasyQueryBuilder<S> {
         this.queryRunner = queryRunner;
     }
     
-    public <E> WhereBuilder<S, E> where(SingularAttribute<S, E> attribute) {
+    public <E, A> WhereBuilder<E, A, S> where(SingularAttribute<E, A> attribute) {
         
-        return new WhereBuilder<S, E>(this, attribute);
+        return new WhereBuilder<E, A, S>(this, attribute);
     }
 
-    public <E> OrderByBuilder<S, E> orderBy(SingularAttribute<S, E> attribute) {
+    public <E, A> OrderByBuilder<E, A, S> orderBy(SingularAttribute<E, A> attribute) {
         
-        return new OrderByBuilder<S, E>(this, attribute);
+        return new OrderByBuilder<E, A, S>(this, attribute);
     }
 
     void addWhereClause(WhereClause whereClause) {

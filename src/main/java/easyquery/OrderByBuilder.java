@@ -3,12 +3,12 @@ package easyquery;
 import easyquery.clause.OrderBy;
 import javax.persistence.metamodel.SingularAttribute;
 
-public class OrderByBuilder<S, E> {
+public class OrderByBuilder<E, A, S> {
     
     private final EasyQueryBuilder<S> queryBuilder;
-    private final SingularAttribute<S, E> attribute;
+    private final SingularAttribute<E, A> attribute;
 
-    public OrderByBuilder(EasyQueryBuilder<S> queryBuilder, SingularAttribute<S, E> attribute) {
+    public OrderByBuilder(EasyQueryBuilder<S> queryBuilder, SingularAttribute<E, A> attribute) {
         this.queryBuilder = queryBuilder;
         this.attribute = attribute;
     }
