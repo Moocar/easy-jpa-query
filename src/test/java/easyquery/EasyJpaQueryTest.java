@@ -181,7 +181,7 @@ public class EasyJpaQueryTest {
                 .sum(Bicycle_.timestamp)
                 .getResult());
         
-        assertNull(null, easyQuery
+        assertNull(easyQuery
                 .sum(Bicycle_.timestamp)
                 .where(Bicycle_.model).equals("moo")
                 .getResult());
