@@ -56,6 +56,23 @@ public class EasyQuery {
                 new WhereTransformer(criteriaBuilder, root));
     }
 
+    public <E> LongQueryBuilder sum(SingularAttribute<E, Long> attribute) {
+        
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        
+        Root<E> root = criteriaQuery.from(attribute.getDeclaringType().getJavaType());
+        
+        criteriaQuery.select(criteriaBuilder.sum(root.get(attribute)));
+        
+        return new LongQueryBuilder(
+                criteriaQuery, 
+                new QueryRunner(entityManager), 
+                new WhereTransformer(criteriaBuilder, root));
+        
+    }
+
     private <E, S> EasyQueryBuilder<S> create(CriteriaQuery<S> criteriaQuery, EntityManager entityManager, CriteriaBuilder criteriaBuilder, Root<E> root) {
         
         return new EasyQueryBuilder<S>(

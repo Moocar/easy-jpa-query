@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNull;
 
 public class EasyJpaQueryTest {
     
@@ -167,6 +168,23 @@ public class EasyJpaQueryTest {
         assertTrue(easyQuery
                 .count(Bicycle.class)
                 .exists());
+    }
+
+    @Test
+    public void testSum() {
+        
+        createBicycle("desc", 1);
+        createBicycle("desc", 2);
+        createBicycle("desc2", 3);
+        
+        assertEquals(Long.valueOf(6), easyQuery
+                .sum(Bicycle_.timestamp)
+                .getResult());
+        
+        assertNull(null, easyQuery
+                .sum(Bicycle_.timestamp)
+                .where(Bicycle_.model).equals("moo")
+                .getResult());
     }
 
     private Bicycle createBicycle(String model) {
