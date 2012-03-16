@@ -5,7 +5,7 @@
     <groupId>easy-jpa-query</groupId>
     <artifactId>easy-jpa-query</artifactId>
     <packaging>jar</packaging>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
     <name>easy-jpa-query</name>
 
     <description>The hibernate generated meta model is awesome, but the Criteria Query framework sucks.
@@ -39,12 +39,17 @@
             <version>1.0.0.Final</version>
             <type>jar</type>
         </dependency>
-        
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>3.0</version>
+        </dependency>
+
         <!-- Test dependencies -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.6.4.Final</version>
+            <version>3.6.5.Final</version>
             <scope>test</scope>
         </dependency>
         <dependency>

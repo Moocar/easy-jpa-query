@@ -1,13 +1,10 @@
 package easyquery;
 
 import com.google.common.collect.ImmutableList;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
-import javax.persistence.PersistenceException;
-import javax.persistence.TypedQuery;
+
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.List;
 
 public class QueryRunner {
 
@@ -35,10 +32,6 @@ public class QueryRunner {
             
             return createQuery(easyQuery).getSingleResult();
             
-        } catch (NoResultException e) {
-            
-            throw new NoResultException(e.getMessage() + ": " + easyQuery);
-            
         } catch (NonUniqueResultException e) {
             
             throw new NonUniqueResultException(e.getMessage() + ": " + easyQuery);
@@ -49,11 +42,9 @@ public class QueryRunner {
         
         List<S> resultList = createQuery(easyQuery).getResultList();
         
-        if (resultList.isEmpty()) {
-            
+        if (resultList.isEmpty())
             throw new NoResultException("No entity found for query: " + easyQuery);
-        }
-        
+
         return resultList.get(0);
     }
     

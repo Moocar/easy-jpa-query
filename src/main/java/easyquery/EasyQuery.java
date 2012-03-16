@@ -53,7 +53,7 @@ public class EasyQuery {
         return new LongQueryBuilder(
                 criteriaQuery, 
                 new QueryRunner(entityManager), 
-                new WhereTransformer(criteriaBuilder, root));
+                new WhereTransformer<S>(criteriaBuilder, root));
     }
 
     public <E> LongQueryBuilder sum(SingularAttribute<E, Long> attribute) {
@@ -69,7 +69,7 @@ public class EasyQuery {
         return new LongQueryBuilder(
                 criteriaQuery, 
                 new QueryRunner(entityManager), 
-                new WhereTransformer(criteriaBuilder, root));
+                new WhereTransformer<E>(criteriaBuilder, root));
         
     }
 
@@ -78,8 +78,8 @@ public class EasyQuery {
         return new EasyQueryBuilder<S>(
                 criteriaQuery, 
                 new QueryRunner(entityManager),
-                new WhereTransformer(criteriaBuilder, root),
-                new OrderByTransformer(criteriaBuilder, root)
+                new WhereTransformer<E>(criteriaBuilder, root),
+                new OrderByTransformer<E>(criteriaBuilder, root)
         );
     }
 }

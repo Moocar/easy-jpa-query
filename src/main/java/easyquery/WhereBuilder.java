@@ -19,21 +19,21 @@ public class WhereBuilder<E, A, S> {
     
     public EasyQueryBuilder<S> equals(A object) {
         
-        queryBuilder.addWhereClause(new EqualsClause(attribute, object));
+        queryBuilder.addWhereClause(new EqualsClause<E, A>(attribute, object));
         
         return queryBuilder;
     }
     
     public EasyQueryBuilder<S> in(ImmutableCollection<A> collection) {
         
-        queryBuilder.addWhereClause(new InClause(attribute, collection));
+        queryBuilder.addWhereClause(new InClause<E, A>(attribute, collection));
         
         return queryBuilder;
     }
 
     public EasyQueryBuilder<S> notEquals(A object) {
         
-        queryBuilder.addWhereClause(new NotEqualsClause(attribute, object));
+        queryBuilder.addWhereClause(new NotEqualsClause<E, A>(attribute, object));
         
         return queryBuilder;
     }

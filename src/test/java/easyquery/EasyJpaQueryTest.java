@@ -1,18 +1,13 @@
 package easyquery;
 
-import javax.persistence.NonUniqueResultException;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertNull;
+
+import javax.persistence.*;
+
+import static org.junit.Assert.*;
 
 public class EasyJpaQueryTest {
     
@@ -185,6 +180,19 @@ public class EasyJpaQueryTest {
                 .sum(Bicycle_.timestamp)
                 .where(Bicycle_.model).equals("moo")
                 .getResult());
+    }
+
+    @Test
+    public void testNotFound() {
+        try {
+        easyQuery.select(Bicycle.class)
+                .where(Bicycle_.id).equals(4323455)
+                .getSingleResult();
+        } catch (NoResultException e) {
+            // good
+            return;
+        }
+        fail("Should have thrown exception");
     }
 
     private Bicycle createBicycle(String model) {

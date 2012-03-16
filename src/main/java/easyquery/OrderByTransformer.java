@@ -18,7 +18,7 @@ public class OrderByTransformer<E> {
         this.root = root;
     }
     
-    public <E> Order transform(OrderBy orderBy) {
+    public Order transform(OrderBy orderBy) {
         
         return orderBy.build(criteriaBuilder, root);
     }

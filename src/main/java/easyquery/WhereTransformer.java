@@ -18,7 +18,7 @@ public class WhereTransformer<E> {
         this.root = root;
     }
     
-    public <E> Predicate transform(WhereClause whereClause) {
+    public Predicate transform(WhereClause whereClause) {
         
         return whereClause.build(criteriaBuilder, root);
     }

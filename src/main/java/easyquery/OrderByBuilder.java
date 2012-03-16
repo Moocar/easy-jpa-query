@@ -15,14 +15,14 @@ public class OrderByBuilder<E, A, S> {
 
     public EasyQueryBuilder<S> asc() {
         
-        queryBuilder.addOrderBy(new OrderBy(attribute, OrderBy.OrderDirection.ASCENDING));
+        queryBuilder.addOrderBy(new OrderBy<E, A>(attribute, OrderBy.OrderDirection.ASCENDING));
         
         return queryBuilder;
     }
 
     public EasyQueryBuilder<S> desc() {
         
-        queryBuilder.addOrderBy(new OrderBy(attribute, OrderBy.OrderDirection.DESCINDING));
+        queryBuilder.addOrderBy(new OrderBy<E, A>(attribute, OrderBy.OrderDirection.DESCINDING));
         
         return queryBuilder;
     }

@@ -1,8 +1,12 @@
 package easyquery;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import easyquery.clause.OrderBy;
 import easyquery.clause.WhereClause;
+
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.metamodel.SingularAttribute;
 
@@ -15,7 +19,8 @@ public class EasyQueryBuilder<S> {
     private final WhereTransformer whereTransformer;
     private final OrderByTransformer orderByTransformer;
     
-    public EasyQueryBuilder(CriteriaQuery<S> criteriaQuery, QueryRunner queryRunner, WhereTransformer whereTransformer, OrderByTransformer orderByTransformer) {
+    public EasyQueryBuilder(CriteriaQuery<S> criteriaQuery, QueryRunner queryRunner, WhereTransformer whereTransformer,
+                            OrderByTransformer orderByTransformer) {
         whereClauses = ImmutableList.builder();
         orderClauses = ImmutableList.builder();
         this.criteriaQuery = criteriaQuery;
@@ -65,7 +70,16 @@ public class EasyQueryBuilder<S> {
     
     public S getSingleResult() {
 
-        return queryRunner.getSingleResult(getCriteriaQuery());
+        try {
+            return queryRunner.getSingleResult(getCriteriaQuery());
+        } catch (NoResultException e) {
+            throw new NoResultException(e.getMessage() + ": " + Collections2.transform(whereClauses.build(), new Function<WhereClause, String>() {
+                @Override
+                public String apply(WhereClause o) {
+                    return o.toString();
+                }
+            }));
+        }
     }
 
     public S getFirstResult() {
