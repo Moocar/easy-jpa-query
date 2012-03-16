@@ -13,7 +13,7 @@ public class EasyQueryModule extends AbstractModule{
      * Provides an instance of EasyQuery for making super awesome easy to understand sql statements
      */
     @Provides
-    EasyQuery getEasyQuery(Provider<EntityManager> entityManagerProvider) {
+    public EasyQuery getEasyQuery(Provider<EntityManager> entityManagerProvider) {
         return new EasyQuery(entityManagerProvider.get());
     }
 
